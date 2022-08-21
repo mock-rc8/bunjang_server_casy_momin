@@ -29,8 +29,9 @@
 <img src="./screenshotImage/img04.JPG">
 7. 테스트 성공
 <br>
+<br>
 ⭐ ERD 최종확인, DB sheet 확인 후 API명세서 작성 → 작성중
-
+<img src="./screenshotImage/img05.JPG">
 ⭐ 더미데이터 작성 → 작성중
 
 ⭐ 회원가입API → 시작
