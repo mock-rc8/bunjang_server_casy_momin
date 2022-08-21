@@ -1,9 +1,10 @@
 server:
-  port: 9000
+  port: 9001
 
 spring:
-  application:
-    name: demo
+  profiles:
+    activate:
+      on-profile: prod
 
   datasource:
     platform: mysql

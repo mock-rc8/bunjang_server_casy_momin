@@ -1,6 +1,6 @@
 server:
   port: 9000
-  address: 43.200.144.217
+
 spring:
   application:
     name: demo
@@ -10,5 +10,4 @@ spring:
     url: jdbc:mysql://jungmindb.c7pyd26tifkr.ap-northeast-2.rds.amazonaws.com:3306/Bunjang?autoReconnect=true # 변경해주세요
     username: master
     password: JjungminLee0964
-    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
-    # driver-class-name: com.mysql.jdbc.Driver # mysql 5버전
+    driver-class-name: com.mysql.cj.jdbc.Driver
