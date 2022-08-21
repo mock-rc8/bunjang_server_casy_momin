@@ -1,6 +1,6 @@
 server:
   port: 9000
-  address: 43.200.144.217
+
 spring:
   application:
     name: demo
