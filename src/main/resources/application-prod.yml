@@ -1,0 +1,16 @@
+server:
+  port: 9002
+
+
+spring:
+  profiles:
+      activate:
+        on-profile: prod
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://jungmindb.c7pyd26tifkr.ap-northeast-2.rds.amazonaws.com:3306/YOUTUBE?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    # url 형식은 jdbc:mysql://RDS의 EndPoint/내부 DB 스키마명 입니다.
+    username: master # 만약 따로 설정하지 않으셨다면 기본값은 admin 입니다
+    password: JjungminLee0964  # 비밀번호를 입력해주세요!
+    driver-class-name: com.mysql.cj.jdbc.Driver

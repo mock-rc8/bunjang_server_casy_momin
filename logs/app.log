@@ -1,0 +1,13 @@
+00:04:14.000 WARN  [File:UserService.java] [Func:createUser] [Line:45] [Message:service]- service
+00:12:53.320 WARN  [File:UserDao.java] [Func:createUser] [Line:38] [Message:시작]- 시작
+00:16:56.477 WARN  [File:UserDao.java] [Func:createUser] [Line:38] [Message:시작]- 시작
+00:19:30.851 WARN  [File:UserDao.java] [Func:createUser] [Line:38] [Message:시작]- 시작
+00:21:21.667 WARN  [File:UserDao.java] [Func:createUser] [Line:38] [Message:시작]- 시작
+00:21:21.669 WARN  [File:UserDao.java] [Func:createUser] [Line:41] [Message:41]- 41
+00:21:21.670 WARN  [File:UserDao.java] [Func:createUser] [Line:43] [Message:42]- 42
+00:21:21.671 WARN  [File:UserDao.java] [Func:createUser] [Line:45] [Message:43]- 43
+00:24:46.728 WARN  [File:UserDao.java] [Func:createUser] [Line:38] [Message:시작]- 시작
+00:24:46.738 WARN  [File:UserDao.java] [Func:createUser] [Line:41] [Message:41]- 41
+00:24:46.738 WARN  [File:UserDao.java] [Func:createUser] [Line:43] [Message:42]- 42
+00:24:46.739 WARN  [File:UserDao.java] [Func:createUser] [Line:45] [Message:43]- 43
+01:01:26.300 WARN  [File:UserService.java] [Func:createUser] [Line:68] [Message:김병지]- 김병지
