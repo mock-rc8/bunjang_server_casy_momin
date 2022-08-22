@@ -57,31 +57,54 @@ public class UserDao {
                 getUserParams);
     }
     
-
+    //회원가입
     public int createUser(PostUserReq postUserReq){
-        String createUserQuery = "insert into UserInfo (userName, ID, password, email) VALUES (?,?,?,?)";
-        Object[] createUserParams = new Object[]{postUserReq.getUserName(), postUserReq.getId(), postUserReq.getPassword(), postUserReq.getEmail()};
+        int lastInsertId;
+        String createUserQuery = "insert into Users (userName, birthDate, phoneNum, carrier,password,accounts,updated,created,status) VALUES (?,?,?,?,?,null,now(),now(),'A');";
+        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getBirthDate(), postUserReq.getPhoneNum(), postUserReq.getCarrier(),postUserReq.getPassword()};
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
-        String lastInserIdQuery = "select last_insert_id()";
-        return this.jdbcTemplate.queryForObject(lastInserIdQuery,int.class);
-    }
+        String lastInsertIdQuery = "select last_insert_id()";
+        lastInsertId = this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
 
-    public int checkEmail(String email){
-        String checkEmailQuery = "select exists(select email from UserInfo where email = ?)";
-        String checkEmailParams = email;
-        return this.jdbcTemplate.queryForObject(checkEmailQuery,
+        String createStoreNameQuery = "insert into Store (storeName,userID) values(?,?);";
+        Object[] createStoreNameParams = new Object[]{postUserReq.getStoreName(), lastInsertId};
+        this.jdbcTemplate.update(createStoreNameQuery, createStoreNameParams);
+
+        return lastInsertId;
+    }
+    // 회원가입 중 상점명 중복 확인 -> Provider에서 호출
+    public int checkStoreName(String storeName){
+        String checkStoreNameQuery = "select exists(select storeName from Store where storeName= ?);";
+        String checkStoreNameParams = storeName;
+        return this.jdbcTemplate.queryForObject(checkStoreNameQuery,
                 int.class,
-                checkEmailParams);
+                checkStoreNameParams);
 
     }
-
-    public int modifyUserName(PatchUserReq patchUserReq){
-        String modifyUserNameQuery = "update UserInfo set userName = ? where userIdx = ? ";
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
-
-        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+    // 마지막 회원가입자 상점 이름 가져오기 -> Service에서 호출
+    public String getStoreName(int lastInsertId){
+        String getStoreNameQuery = "select storeName from Store where userID=?;";
+        int getStoreNameParams = lastInsertId;
+        return this.jdbcTemplate.queryForObject(getStoreNameQuery,
+                String.class,
+                getStoreNameParams);
     }
+    // 마지막 회원가입자 유저 이름 가져오기 -> Service에서 호출
+    public String getUserName(int lastInsertId){
+        String getUserNameQuery = "select userName from Users where ID=?;";
+        int getUserNameParams = lastInsertId;
+        return this.jdbcTemplate.queryForObject(getUserNameQuery,
+                String.class,
+                getUserNameParams);
+    }
+
+//    public int modifyUserName(PatchUserReq patchUserReq){
+//        String modifyUserNameQuery = "update UserInfo set userName = ? where userIdx = ? ";
+//        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
+//
+//        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+//    }
 
     public User getPwd(PostLoginReq postLoginReq){
         String getPwdQuery = "select userIdx, password,email,userName,ID from UserInfo where ID = ?";

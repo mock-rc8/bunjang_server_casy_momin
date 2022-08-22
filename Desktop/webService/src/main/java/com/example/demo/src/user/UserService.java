@@ -34,10 +34,9 @@ public class UserService {
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         //중복
-        if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
-            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+        if(userProvider.checkStoreName(postUserReq.getStoreName()) ==1){
+            throw new BaseException(POST_USERS_EXISTS_STORE_NAME); // 중복된 상점명 예외
         }
-
         String pwd;
         try{
             //암호화
@@ -45,26 +44,27 @@ public class UserService {
             postUserReq.setPassword(pwd);
 
         } catch (Exception ignored) {
-            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR); // 비밀번호 암호화 실패 예외
         }
         try{
-            int userIdx = userDao.createUser(postUserReq);
-            //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
+            int userIdx = userDao.createUser(postUserReq); // 마지막 회원가입자 userID
+            String userName = userDao.getUserName(userIdx); // 마지막 회원가입자 userName
+            String storeName = userDao.getStoreName(userIdx); // 마지막 회원가입자 storeName
+            String jwt = jwtService.createJwt(userIdx); //jwt 발급
+            return new PostUserRes(jwt,userIdx,userName,storeName);
         } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
+            throw new BaseException(DATABASE_ERROR); // 데이터베이스 접근 예외
         }
     }
 
-    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
-        try{
-            int result = userDao.modifyUserName(patchUserReq);
-            if(result == 0){
-                throw new BaseException(MODIFY_FAIL_USERNAME);
-            }
-        } catch(Exception exception){
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+//    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
+//        try{
+//            int result = userDao.modifyUserName(patchUserReq);
+//            if(result == 0){
+//                throw new BaseException(MODIFY_FAIL_USERNAME);
+//            }
+//        } catch(Exception exception){
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+//    }
 }
