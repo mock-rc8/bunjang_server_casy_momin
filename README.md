@@ -41,3 +41,9 @@
 
 ⭐ 회원가입API → 완료
 <img src="./screenshotImage/img06.JPG">
+
+⭐ erd kathy님과 상의 후 카테고리, 주소 테이블 수정 → 완료
+
+⭐ api uri 네이밍, main branch에 올릴 프로젝트의 패키지 구조 설계 회의 → 완료
+* JWT 적용관련하여 uri의 /:userIdx 삭제
+* 네이밍 할 때 기준을 어떻게 해야할 것인가?
