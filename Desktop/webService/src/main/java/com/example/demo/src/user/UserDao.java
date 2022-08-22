@@ -60,7 +60,7 @@ public class UserDao {
     //회원가입
     public int createUser(PostUserReq postUserReq){
         int lastInsertId;
-        String createUserQuery = "insert into Users (userName, birthDate, phoneNum, carrier,password,accounts,updated,created,status) VALUES (?,?,?,?,?,null,now(),now(),'A');";
+        String createUserQuery = "insert into Users (userName, birthDate, phoneNum, carrier,password,accounts,updated,created,status) VALUES (?,?,?,?,?,0,now(),now(),'A');";
         Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getBirthDate(), postUserReq.getPhoneNum(), postUserReq.getCarrier(),postUserReq.getPassword()};
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
@@ -80,23 +80,20 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(checkStoreNameQuery,
                 int.class,
                 checkStoreNameParams);
-
     }
     // 마지막 회원가입자 상점 이름 가져오기 -> Service에서 호출
     public String getStoreName(int lastInsertId){
         String getStoreNameQuery = "select storeName from Store where userID=?;";
-        int getStoreNameParams = lastInsertId;
         return this.jdbcTemplate.queryForObject(getStoreNameQuery,
                 String.class,
-                getStoreNameParams);
+                lastInsertId);
     }
     // 마지막 회원가입자 유저 이름 가져오기 -> Service에서 호출
     public String getUserName(int lastInsertId){
         String getUserNameQuery = "select userName from Users where ID=?;";
-        int getUserNameParams = lastInsertId;
         return this.jdbcTemplate.queryForObject(getUserNameQuery,
                 String.class,
-                getUserNameParams);
+                lastInsertId);
     }
 
 //    public int modifyUserName(PatchUserReq patchUserReq){
