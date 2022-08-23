@@ -59,3 +59,23 @@ https://docs.google.com/spreadsheets/d/1al88rl27kN-jMgmkjgHzXS7I48iKWLde_O2_2wwf
 ⭐ main 브랜치 환경 설정 > 커밋 > ec2에 클론 > prod서버 열기 (이걸로 프론트 분들이랑 통신)
 
 main 브랜치에 올라갈 패키지 (최초 환경설정)
+
+⭐ API 수정 -> JWT 적용되는 것은 idx를 query parameter로 쓰지않을 것
+
+⭐ 로그인 API 설계하기 (내일 수정)
+
+📌 ISSUE
+
+4000에러가 계속 떴는데 dao 에러가 아니라 yml에서 db 스키마를 bunjang으로 했어야 했는데 다른 스키마 참조중이였다.
+
+
+## 8월 23일 개발일지
+
+⭐ 어제 main브랜치 ec2에 클론 못한거 하기
+
+📌 ISSUE
+스프링부트 build할때 java --jar에서 logback permission denied에러
+sudo chown -R ubuntu ./ 로 관리자 권한 변경하면 됨
+
+⭐ 로그인 API 변경 -> 비밀번호 기준으로 유저 찾기로 변경하고, Req에서 상점명 추가하기
+ 
