@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.demo.config.BaseResponseStatus.*;
+
 @RestController // Rest API 또는 WebAPI를 개발하기 위한 어노테이션. @Controller + @ResponseBody 를 합친것.
                 // @Controller      [Presentation Layer에서 Contoller를 명시하기 위해 사용]
                 //  [Presentation Layer?] 클라이언트와 최초로 만나는 곳으로 데이터 입출력이 발생하는 곳
@@ -75,7 +77,25 @@ public class UserController {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
+
+            //null 처리 ->2000번 에러 띄우기
+            if(postLoginReq.getName()==null || postLoginReq.getBirthDate()==null
+                    ||postLoginReq.getPhoneNum()==null || postLoginReq.getCarrier()==null || postLoginReq.getPassword()==null ||postLoginReq.getStoreName()==null){
+                return new BaseResponse<>(REQUEST_ERROR);
+            }
+
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
+            //비활성화 (휴면처리된 유저 처리) -> 휴면처리된 회원입니다.
+            if(postLoginRes.getStatus().equals("R")){
+                return new BaseResponse<>(POST_USERS_INACTIVE_USER);
+            }
+
+            //탈퇴한 유저 처리 -> 탈퇴한 회원입니다.
+            if(postLoginRes.getStatus().equals("D")){
+                return new BaseResponse<>(POST_USERS_DELETE_USER);
+            }
+
+
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

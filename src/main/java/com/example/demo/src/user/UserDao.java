@@ -2,7 +2,9 @@ package com.example.demo.src.user;
 
 
 import com.example.demo.config.BaseException;
+import com.example.demo.config.secret.Secret;
 import com.example.demo.src.user.model.*;
+import com.example.demo.utils.AES128;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+
+import static com.example.demo.config.BaseResponseStatus.PASSWORD_DECRYPTION_ERROR;
 
 @Repository //  [Persistence Layer에서 DAO를 명시하기 위해 사용]
 
@@ -89,29 +93,44 @@ public class UserDao {
 
         return this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams); // 대응시켜 매핑시켜 쿼리 요청(생성했으면 1, 실패했으면 0) 
     }
-
-    // 캐시
-    // 로그인: 해당 password에 해당되는 user의 암호화된 비밀번호 값을 가져온다.
-    public User getPwd(PostLoginReq postLoginReq) throws BaseException {
+    // 로그인: 받아온 비밀번호,생년월일,이름에 모두 해당하는 유저를 찾고 -> 그 유저의 ID 값을 반환해준다.
+    public User userLogIn(PostLoginReq postLoginReq) throws BaseException {
 
 
-        String getPwdQuery = "select ID,userName,birthDate,carrier,phoneNum,password from Users where phoneNum = ?"; // 해당 email을 만족하는 User의 정보들을 조회한다.
+        String getLogInQuery = "select Users.ID,userName,birthDate,carrier,phoneNum,password,Users.status,Store.storeName from Users " +
+                "join Store on Store.userID=Users.ID "+
+                "where password = ? and birthDate = ? and phoneNum=? "; // 해당 email을 만족하는 User의 정보들을 조회한다.
 
-        System.out.println(postLoginReq.getPhoneNum());
 
-        return this.jdbcTemplate.queryForObject(getPwdQuery,
+        //암호화된 비밀번호를 params로 넣어준다
+        String pwdParams;
+        try{
+
+            pwdParams=new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postLoginReq.getPassword());
+            System.out.println(pwdParams);
+
+        }catch (Exception ignored) {
+
+            System.out.println(ignored);
+            throw new BaseException(PASSWORD_DECRYPTION_ERROR);
+        }
+        Object[] logInParams = new Object[]{pwdParams, postLoginReq.getBirthDate(),postLoginReq.getPhoneNum()};
+
+
+        return this.jdbcTemplate.queryForObject(getLogInQuery,
                 (rs, rowNum) -> new User(
                         rs.getInt("ID"),
                         rs.getString("userName"),
                         rs.getString("birthDate"),
                         rs.getString("carrier"),
                         rs.getString("phoneNum"),
-                        rs.getString("password")
-                ), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
-               postLoginReq.getPhoneNum()
+                        rs.getString("password"),
+                        rs.getString("status"),
+                        rs.getString("storeName")
+                ), logInParams// RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
+
         ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
-
     // User 테이블에 존재하는 전체 유저들의 정보 조회
     public List<GetUserRes> getUsers() {
         String getUsersQuery = "select * from User"; //User 테이블에 존재하는 모든 회원들의 정보를 조회하는 쿼리

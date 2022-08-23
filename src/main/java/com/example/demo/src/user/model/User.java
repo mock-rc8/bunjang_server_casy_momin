@@ -17,5 +17,7 @@ public class User {
     private String carrier;
     private String phoneNum;
     private String password;
+    private String status;
+    private String storeName;
 
 }

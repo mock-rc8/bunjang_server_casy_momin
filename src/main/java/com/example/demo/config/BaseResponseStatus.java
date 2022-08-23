@@ -30,7 +30,9 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_STORE_NAME(false,2017,"중복된 상점 이름입니다."),
     POST_USERS_EXISTS_SHIPPING_INFO(false,2018,"같은 배송지가 존재합니다."),
-
+    //로그인
+    POST_USERS_INACTIVE_USER(false,2019,"휴면처리된 회원입니다."),
+    POST_USERS_DELETE_USER(false,2020,"탈퇴한 회원입니다."),
 
 
     /**
