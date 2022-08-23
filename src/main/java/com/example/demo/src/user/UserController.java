@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-import static com.example.demo.config.BaseResponseStatus.*;
-import static com.example.demo.utils.ValidationRegex.isRegexEmail;
-
 @RestController // Rest API 또는 WebAPI를 개발하기 위한 어노테이션. @Controller + @ResponseBody 를 합친것.
                 // @Controller      [Presentation Layer에서 Contoller를 명시하기 위해 사용]
                 //  [Presentation Layer?] 클라이언트와 최초로 만나는 곳으로 데이터 입출력이 발생하는 곳
@@ -71,7 +67,7 @@ public class UserController {
 
     /**
      * 로그인 API
-     * [POST] /users/logIn
+     * [POST] /users/log-in
      */
     @ResponseBody
     @PostMapping("/log-in")
@@ -82,6 +78,51 @@ public class UserController {
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+    /**
+     * 배송지 조회 API
+     * [GET] /users/shipping
+     */
+    @ResponseBody
+    @GetMapping("/shipping")
+    public BaseResponse<List<GetShippingRes>> getShippingList(){
+        try{
+            int userIdx = jwtService.getUserIdx();
+            List<GetShippingRes> getShippingRes = userProvider.getShippingList(userIdx);
+            return new BaseResponse<>(getShippingRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+    /**
+     * 배송지 추가 API
+     * [POST] /users/shipping
+     */
+    @ResponseBody
+    @PostMapping("/shipping")
+    public BaseResponse<List<PostShippingRes>> createShippingInfo(@RequestBody PostShippingReq postShippingReq) {
+        try{
+            int userIdx = jwtService.getUserIdx();
+            List<PostShippingRes> postShippingRes = userService.createShippingInfo(userIdx,postShippingReq);
+            return new BaseResponse<>(postShippingRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+    /**
+     * 배송지 수정 API
+     * [PATCH] /users/shipping/:shippingIdx
+     */
+    @ResponseBody
+    @PatchMapping("/shipping/{shippingIdx}")
+    public BaseResponse<List<PatchShippingRes>> modifyShippingInfo(@PathVariable("shippingIdx") int shippingIdx,@RequestBody PatchShippingReq patchShippingReq){
+        try{
+            int userIdx = jwtService.getUserIdx();
+            List<PatchShippingRes> patchShippingRes = userService.modifyShippingInfo(userIdx,shippingIdx,patchShippingReq);
+            return new BaseResponse<>(patchShippingRes);
+        }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
     }

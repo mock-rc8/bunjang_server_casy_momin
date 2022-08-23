@@ -26,7 +26,7 @@ public class UserProvider {
     //git commit test1
     // *********************** 동작에 있어 필요한 요소들을 불러옵니다. *************************
     private final UserDao userDao;
-    private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+    private final JwtService jwtService;
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -34,7 +34,7 @@ public class UserProvider {
     @Autowired //readme 참고
     public UserProvider(UserDao userDao, JwtService jwtService) {
         this.userDao = userDao;
-        this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+        this.jwtService = jwtService;
     }
     // ******************************************************************************
 
@@ -62,7 +62,7 @@ public class UserProvider {
         }
     }
 
-    // 해당 이메일이 이미 User Table에 존재하는지 확인
+    // 해당 상점명이 이미 User Table에 존재하는지 확인
     public int checkStoreName(String storeName) throws BaseException{
         try{
             return userDao.checkStoreName(storeName);
@@ -70,7 +70,30 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+    // 특정 유저의 배송지 추가 행위에 대한 중복검사 -> Address Table 검사 - userIdx 동일조건 & 관련된 rows 검사
+    public int checkShippingInfo(int userIdx,PostShippingReq postShippingReq) throws BaseException{
+        try{
+            return userDao.checkShippingInfo(userIdx,postShippingReq);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+    // 특정 유저의 배송지 수정 행위에 대한 중복검사 -> Address Table 검사 - userIdx 동일조건 & shippingIdx 동일한 row 제외 & 관련된 rows 검사
+    public int checkShippingInfo(int userIdx,int shippingIdx,PatchShippingReq patchShippingReq) throws BaseException{
+        try{
+            return userDao.checkShippingInfo(userIdx,shippingIdx,patchShippingReq);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+    // 특정 유저의 배송지 조회
+    public List<GetShippingRes> getShippingList(int userIdx) throws BaseException{
+        try{
+            return userDao.getShippingList(userIdx);
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
     // User들의 정보를 조회
     public List<GetUserRes> getUsers() throws BaseException {

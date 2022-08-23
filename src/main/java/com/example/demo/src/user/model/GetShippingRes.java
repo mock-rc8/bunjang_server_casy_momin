@@ -1,0 +1,14 @@
+package com.example.demo.src.user.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class GetShippingRes { // GetShippingRes -> mypage > 배송지설정 -> 유저가 등록해둔 주소관리 리스트가 나옴.
+    private String receiverName; // 수령인 이름
+    private String address; // 수령인 주소
+    private String receiverPhoneNum; // 수령인 연락처
+}

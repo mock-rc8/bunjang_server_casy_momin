@@ -10,8 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.jdbc.core.JdbcTemplate;
-import javax.sql.DataSource;
+
+import java.util.List;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 /**
@@ -41,8 +42,6 @@ public class UserService {
     // ******************************************************************************
     // 회원가입(POST)
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-
-
 
         if(userProvider.checkStoreName(postUserReq.getStoreName()) ==1){
             throw new BaseException(POST_USERS_EXISTS_STORE_NAME); // 중복된 상점명 예외
@@ -76,7 +75,28 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+    // 배송지 추가
+    public List<PostShippingRes> createShippingInfo(int userIdx, PostShippingReq postShippingReq) throws BaseException{
+        if(userProvider.checkShippingInfo(userIdx,postShippingReq) == 1){
+            throw new BaseException(POST_USERS_EXISTS_SHIPPING_INFO); // 중복된 배송지 정보 예외
+        }
+        try {
+            return userDao.createShippingInfo(userIdx,postShippingReq);
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+    // 배송지 수정
+    public List<PatchShippingRes> modifyShippingInfo(int userIdx,int shippingIdx, PatchShippingReq patchShippingReq) throws BaseException{
+        if(userProvider.checkShippingInfo(userIdx,shippingIdx,patchShippingReq) == 1){
+            throw new BaseException(POST_USERS_EXISTS_SHIPPING_INFO); // 중복된 배송지 정보 예외
+        }
+        try {
+            return userDao.modifyShippingInfo(userIdx,shippingIdx,patchShippingReq);
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
     // 회원정보 수정(Patch)
     public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
         try {

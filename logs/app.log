@@ -11,3 +11,5 @@
 00:24:46.738 WARN  [File:UserDao.java] [Func:createUser] [Line:43] [Message:42]- 42
 00:24:46.739 WARN  [File:UserDao.java] [Func:createUser] [Line:45] [Message:43]- 43
 01:01:26.300 WARN  [File:UserService.java] [Func:createUser] [Line:68] [Message:김병지]- 김병지
+12:19:35.986 WARN  [File:TestController.java] [Func:getAll] [Line:35] [Message:Warn Level 테스트]- Warn Level 테스트
+12:19:35.987 ERROR [File:TestController.java] [Func:getAll] [Line:38] [Message:ERROR Level 테스트]- ERROR Level 테스트
