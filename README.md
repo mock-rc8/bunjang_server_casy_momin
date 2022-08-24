@@ -1,61 +1,54 @@
-## 8월 20일 개발일지
+## **8월 20일 개발일지**
 
-⭐ 구현 범위 기획
+⭐ 구현 범위 기획
 
-⭐ ERD 설계
+⭐ ERD 회의
 
-https://aquerytool.com/aquerymain/index/?rurl=09c2c811-f2c3-4a25-8751-e3d768fa7ece
+[https://aquerytool.com/aquerymain/index/?rurl=09c2c811-f2c3-4a25-8751-e3d768fa7ece](https://aquerytool.com/aquerymain/index/?rurl=09c2c811-f2c3-4a25-8751-e3d768fa7ece)
 
 비밀번호:82512i
 
-⭐ EC2 prod 서버 구축 -> 구축중
+⭐ EC2 서버 구축
 
+## **8월 21일 개발일지**
 
+⭐ 서버 & 스프링부트템플릿 탑재 및 환경구축 → 완료
+<br>
+<img src="./screenshotImage/img01.JPG">
+<br>
+1. 윈도우 운영체제 스프링부트 템플릿 다운로드
+2. git bash를 통한 git branch -> branch명 : mumin
+3. EC2 -> WinScp(Putty) remote 환경 -> nginx 설치
+4. /var/www/html/prod 경로에 git clone
+5. 컴파일
+<br>
+<img src="./screenshotImage/img02.JPG">
+<img src="./screenshotImage/img03.JPG">
+6. prod 서버 9001포트 설정 후 테스트
+<br>
+<img src="./screenshotImage/img04.JPG">
+7. 테스트 성공
+<br>
+<br>
+⭐ ERD 최종확인, DB sheet 확인 후 API명세서 작성 → 작성중
+<br><br>
+<img src="./screenshotImage/img05.JPG">
+⭐ 더미데이터 작성 → 작성중
 
-## 8월 21일 개발일지
+⭐ 회원가입API → 시작
 
-⭐ ec2 서버 구축 + kathy 브랜치 하나 파서 거기에 내 스프링부트 프로젝트 커밋
-![img.png](img.png)
+## **8월 22일 개발일지**
+⭐ 더미데이터 작성 → 작성중
 
-⭐ kathy 브랜치의 내용만 ec2에 git clone
+⭐ 회원가입API → 완료
+<br><br>
+<img src="./screenshotImage/img06.JPG">
 
-sudo chown -R $USER /var/www
-git clone -b 브랜치명 repo ssh 주소
+⭐ erd kathy님과 상의 후 카테고리, 주소 테이블 수정 → 완료
+<br><br>
+<img src="./screenshotImage/img07.JPG">
+<img src="./screenshotImage/img08.JPG">
 
-를 통해 kathy 브랜치만 ec2에 clone
-
-⭐ 인텔리제이에서 서버 환경분리를 위해 prod,dev 서버 따로 만들고 prod서버는 포트를 9002번 열어주기
-
-![img_1.png](img_1.png)
-
-⭐ prod만 ec2에 build하기
-
-![img_2.png](img_2.png)
-
-![img_3.png](img_3.png)
-
-9002번 포트가 열린것을 확인할 수 있음
-
-⭐ 크롬창에 ipv4주소:9002/test/log/prod 검색
-
-![img_4.png](img_4.png)
-
-영상 증명 티스토리 링크:https://meaningland02.tistory.com/49
-비밀번호:41NjI0Mz
-
-⭐ 차단 테이블, 후기 테이블, 거래 테이블 추가하기
-
-⭐ API 명세서 작성 초안 완료
-https://docs.google.com/spreadsheets/d/1al88rl27kN-jMgmkjgHzXS7I48iKWLde_O2_2wwfH48/edit#gid=1496945682
-
-⭐ 더미데이터 수요일까지 마무리 -> 넣는 중 
-
-
-
-## 8월 22일 개발일지
-
-⭐ 카테고리 테이블 1:N으로 수정
-
-⭐ main 브랜치 환경 설정 > 커밋 > ec2에 클론 > prod서버 열기 (이걸로 프론트 분들이랑 통신)
-
-main 브랜치에 올라갈 패키지 (최초 환경설정)
+⭐ api uri 네이밍, main branch에 올릴 프로젝트의 패키지 구조 설계 회의 → 1차 완료 (앞으로 수정 가능성 충분)
+* JWT 적용관련하여 uri의 /:userIdx 삭제
+* 네이밍 할 때 기준을 어떻게 해야할 것인가?
