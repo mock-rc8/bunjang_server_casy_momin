@@ -12,7 +12,9 @@ import lombok.Setter;
  * 로그인의 결과(Respone)를 보여주는 데이터의 형태
  */
 public class PostLoginRes {
-    private int userIdx;
-    private String jwt;
+    private int userIdx; // 유저ID
+    private String status; // 유저의 상태
+    private String jwt; // 암호화 토큰
+
 
 }

@@ -12,11 +12,10 @@ import lombok.*;
  * Email, Password 정보를 전달하기 위해 Body값까지 전달하는 Post 요청을 사용한다.
  */
 public class PostLoginReq {
-    private String name;
-    private String birthDate;
-    private String phoneNum;
-    private String carrier;
-    private String password;
-    private String storeName;
-
+    private String name; // 이름
+    private String residentNumLast; // 주민 뒷자리 1
+    private String residentNumFirst; // 주민 앞자리 6
+    private String phoneNum; // 연락처
+    private String carrier; // 통신사
+    private String password; // 비밀번호
 }
