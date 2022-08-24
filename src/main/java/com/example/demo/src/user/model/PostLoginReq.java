@@ -13,9 +13,9 @@ import lombok.*;
  */
 public class PostLoginReq {
     private String name; // 이름
-    private String residentNumLast; // 주민 뒷자리 1
-    private String residentNumFirst; // 주민 앞자리 6
+    private String birthDate; // 생년월일
     private String phoneNum; // 연락처
     private String carrier; // 통신사
     private String password; // 비밀번호
+    private String storeName; // 상점명
 }

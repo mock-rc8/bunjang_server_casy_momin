@@ -46,12 +46,15 @@ public class UserService {
         if(userProvider.checkStoreName(postUserReq.getStoreName()) ==1){
             throw new BaseException(POST_USERS_EXISTS_STORE_NAME); // 중복된 상점명 예외
         }
+
+
         String pwd;
         try {
             // 암호화: postUserReq에서 제공받은 비밀번호를 보안을 위해 암호화시켜 DB에 저장합니다.
             // ex) password123 -> dfhsjfkjdsnj4@!$!@chdsnjfwkenjfnsjfnjsd.fdsfaifsadjfjaf
-            pwd = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postUserReq.getPassword()); // 비밀번호 암호화
-            postUserReq.setPassword(pwd); // 암호화된 비밀번호로 request로 온 비밀번호를 대체합니다.
+            pwd = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postUserReq.getPassword()); // 암호화코드
+            postUserReq.setPassword(pwd);
+
         } catch (Exception ignored) { // 암호화가 실패하였을 경우 에러 발생
             System.out.println(ignored);
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
@@ -65,6 +68,8 @@ public class UserService {
             String storeName = userDao.getStoreName(userIdx); // 마지막 회원가입자 storeName
             String jwt = jwtService.createJwt(userIdx); //jwt 발급
             return new PostUserRes(jwt,userIdx,userName,storeName);
+
+
         } catch (Exception exception) { // DB에 이상이 있는 경우 에러 메시지를 보냅니다.
             System.out.println(exception);
             throw new BaseException(DATABASE_ERROR);

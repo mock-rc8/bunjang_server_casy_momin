@@ -8,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  // 해당 클래스의 파라미터가 없는 생성자를 생성, 접근제한자를 PROTECTED로 설정.
 public class PostUserReq { // 회원가입 model
     private String name;
-    private String residentNumLast; // 주민 뒷자리 1
-    private String residentNumFirst; // 주민 앞자리 6
+    private String birthDate;
     private String phoneNum;
     private String carrier;
     private String password;

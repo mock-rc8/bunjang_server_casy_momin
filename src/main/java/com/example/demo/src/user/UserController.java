@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
-import static com.example.demo.utils.ValidationRegex.*;
 
 @RestController // Rest API 또는 WebAPI를 개발하기 위한 어노테이션. @Controller + @ResponseBody 를 합친것.
                 // @Controller      [Presentation Layer에서 Contoller를 명시하기 위해 사용]
@@ -59,40 +58,8 @@ public class UserController {
     @ResponseBody
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
+        // validation 추가하기!
         try{
-            // validation 추가하기!
-            // 정규표현 및 null 검사
-            //null 처리 ->2000번 에러 띄우기
-            if(postUserReq.getName().length() == 0 || postUserReq.getResidentNumFirst().length() == 0 || postUserReq.getResidentNumLast().length() == 0
-                    && postUserReq.getPhoneNum().length() == 0 || postUserReq.getCarrier().length() == 0 || postUserReq.getPassword().length() == 0 || postUserReq.getStoreName().length() == 0){
-                return new BaseResponse<>(REQUEST_ERROR); // 2000 : 입력값 전체가 빈 값일 때 - 성공
-            }
-            // 휴대폰번호 정규표현
-            if(postUserReq.getPhoneNum().length() == 0){
-                return new BaseResponse<>(POST_USERS_EMPTY_PHONE_NUMBER); // 2004 : 휴대폰번호 빈 문자열 예외
-            }
-            if(postUserReq.getPhoneNum().length() < 4 && postUserReq.getPhoneNum().length() > 0){
-                return new BaseResponse<>(POST_USERS_DEFAULT_RANGE_PHONE_NUMBER); // 2005 : 최소 자릿수 미만 예외
-            }
-            if(!isRegexPhoneNum(postUserReq.getPhoneNum())){
-                return new BaseResponse<>(POST_USERS_INVALID_PHONE_NUMBER); // 2006 : 휴대폰번호 기본 표현식 예외 -> 숫자만 입력
-            }
-            // 주민등록번호 정규표현
-            if(postUserReq.getResidentNumFirst().length() == 0 || postUserReq.getResidentNumLast().length() == 0){
-                return new BaseResponse<>(POST_USERS_EMPTY_RESIDENT_NUMBER); // 2007 : 주민등록번호 빈 문자열 예외
-            }
-            if(!isRegexResidentNumFirst(postUserReq.getResidentNumFirst()) || !isRegexResidentNumLast(postUserReq.getResidentNumLast())){
-                return new BaseResponse<>(POST_USERS_INVALID_RESIDENT_NUMBER); // 2008 : 주민등록번호 기본 표현식 예외 -> 숫자만 입력
-            }
-            if(!isRegexName(postUserReq.getName())){
-                return new BaseResponse<>(POST_USERS_INVALID_USER_NAME); // 2009 : 이름 기본 표현식 예외
-            }
-            if(!isRegexPassword(postUserReq.getPassword())){
-                return new BaseResponse<>(POST_USERS_INVALID_PASSWORD); // 2011 : 비밀번호 기본 표현식 예외
-            }
-            if(!isRegexStoreName(postUserReq.getStoreName())){
-                return new BaseResponse<>(POST_USERS_INVALID_STORE_NAME); // 2012 : 상점명 기본 표현식 예외
-            }
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
@@ -110,31 +77,11 @@ public class UserController {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
-            if(postLoginReq.getName().length() == 0 || postLoginReq.getResidentNumFirst().length() == 0 || postLoginReq.getResidentNumLast().length() == 0
-                    && postLoginReq.getPhoneNum().length() == 0 || postLoginReq.getCarrier().length() == 0 || postLoginReq.getPassword().length() == 0){
-                return new BaseResponse<>(REQUEST_ERROR); // 2000 : 입력값 전체가 빈 값일 때 - 성공
-            }
-            // 휴대폰번호 정규표현
-            if(postLoginReq.getPhoneNum().length() == 0){
-                return new BaseResponse<>(POST_USERS_EMPTY_PHONE_NUMBER); // 2004 : 휴대폰번호 빈 문자열 예외
-            }
-            if(postLoginReq.getPhoneNum().length() < 4 && postLoginReq.getPhoneNum().length() > 0){
-                return new BaseResponse<>(POST_USERS_DEFAULT_RANGE_PHONE_NUMBER); // 2005 : 최소 자릿수 미만 예외
-            }
-            if(!isRegexPhoneNum(postLoginReq.getPhoneNum())){
-                return new BaseResponse<>(POST_USERS_INVALID_PHONE_NUMBER); // 2006 : 휴대폰번호 기본 표현식 예외 -> 숫자만 입력
-            }
-            // 주민등록번호 정규표현
-            if(postLoginReq.getResidentNumFirst().length() == 0 || postLoginReq.getResidentNumLast().length() == 0){
-                return new BaseResponse<>(POST_USERS_EMPTY_RESIDENT_NUMBER); // 2007 : 주민등록번호 빈 문자열 예외
-            }
-            if(!isRegexResidentNumFirst(postLoginReq.getResidentNumFirst()) || !isRegexResidentNumLast(postLoginReq.getResidentNumLast())){
-                return new BaseResponse<>(POST_USERS_INVALID_RESIDENT_NUMBER); // 2008 : 주민등록번호 기본 표현식 예외 -> 숫자만 입력
-            }
-            logger.warn(postLoginReq.getName());
-            logger.warn(isRegexName(postLoginReq.getName())+"");
-            if(!isRegexName(postLoginReq.getName())){
-                return new BaseResponse<>(POST_USERS_INVALID_USER_NAME); // 2009 : 이름 기본 표현식 예외
+
+            //null 처리 ->2000번 에러 띄우기
+            if(postLoginReq.getName()==null || postLoginReq.getBirthDate()==null
+                    ||postLoginReq.getPhoneNum()==null || postLoginReq.getCarrier()==null || postLoginReq.getPassword()==null ||postLoginReq.getStoreName()==null){
+                return new BaseResponse<>(REQUEST_ERROR);
             }
 
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
