@@ -13,4 +13,5 @@ public class PostUserReq {
     private String carrier;
     private String password;
     private String storeName;
+
 }

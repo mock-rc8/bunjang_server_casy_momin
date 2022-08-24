@@ -16,4 +16,5 @@ public class PostUserRes {
     private int userIdx;
     private String name;
     private String storeName;
+
 }

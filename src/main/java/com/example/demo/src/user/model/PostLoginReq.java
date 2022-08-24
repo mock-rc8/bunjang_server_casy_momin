@@ -18,4 +18,5 @@ public class PostLoginReq {
     private String carrier;
     private String password;
     private String storeName;
+
 }

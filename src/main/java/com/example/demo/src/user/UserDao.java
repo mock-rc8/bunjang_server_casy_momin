@@ -92,6 +92,7 @@ public class UserDao {
     }
 
 
+
     // 로그인: 해당 password에 해당되는 user의 암호화된 비밀번호 값을 가져온다.
     public User getPwd(PostLoginReq postLoginReq) throws BaseException {
 
