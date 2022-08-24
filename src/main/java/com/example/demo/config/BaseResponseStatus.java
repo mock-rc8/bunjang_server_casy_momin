@@ -28,7 +28,9 @@ public enum BaseResponseStatus {
     // [POST] /users
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
+    //회원가입
     POST_USERS_EXISTS_STORE_NAME(false,2017,"중복된 상점 이름입니다."),
+    //배송지 추가, 수정
     POST_USERS_EXISTS_SHIPPING_INFO(false,2018,"같은 배송지가 존재합니다."),
     //로그인
     POST_USERS_INACTIVE_USER(false,2019,"휴면처리된 회원입니다."),

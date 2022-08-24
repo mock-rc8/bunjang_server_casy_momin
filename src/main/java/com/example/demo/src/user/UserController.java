@@ -39,13 +39,13 @@ public class UserController {
     @Autowired
     private final UserService userService;
     @Autowired
-    private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+    private final JwtService jwtService;
 
 
     public UserController(UserProvider userProvider, UserService userService, JwtService jwtService) {
         this.userProvider = userProvider;
         this.userService = userService;
-        this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+        this.jwtService = jwtService;
     }
 
     // ******************************************************************************

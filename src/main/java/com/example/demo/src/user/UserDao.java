@@ -39,7 +39,7 @@ public class UserDao {
 
 
 
-    // 무민
+
     //회원가입
     public int createUser(PostUserReq postUserReq){
         int lastInsertId;
@@ -59,7 +59,7 @@ public class UserDao {
 
         return lastInsertId;
     }
-    // 무민
+
     // 회원가입 중 상점명 중복 확인 -> Provider에서 호출
     public int checkStoreName(String storeName){
         String checkStoreNameQuery = "select exists(select storeName from Store where storeName= ?);";
@@ -68,7 +68,7 @@ public class UserDao {
                 int.class,
                 checkStoreNameParams);
     }
-    // 무민
+
     // 마지막 회원가입자 상점 이름 가져오기 -> Service에서 호출
     public String getStoreName(int lastInsertId){
         String getStoreNameQuery = "select storeName from Store where userID=?;";
@@ -76,7 +76,7 @@ public class UserDao {
                 String.class,
                 lastInsertId);
     }
-    // 무민
+
     // 마지막 회원가입자 유저 이름 가져오기 -> Service에서 호출
     public String getUserName(int lastInsertId){
         String getUserNameQuery = "select userName from Users where ID=?;";

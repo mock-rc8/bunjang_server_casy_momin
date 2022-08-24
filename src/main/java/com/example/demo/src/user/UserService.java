@@ -29,14 +29,14 @@ public class UserService {
     // *********************** 동작에 있어 필요한 요소들을 불러옵니다. *************************
     private final UserDao userDao;
     private final UserProvider userProvider;
-    private final JwtService jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+    private final JwtService jwtService;
 
 
     @Autowired //readme 참고
     public UserService(UserDao userDao, UserProvider userProvider, JwtService jwtService) {
         this.userDao = userDao;
         this.userProvider = userProvider;
-        this.jwtService = jwtService; // JWT부분은 7주차에 다루므로 모르셔도 됩니다!
+        this.jwtService = jwtService;
 
     }
     // ******************************************************************************

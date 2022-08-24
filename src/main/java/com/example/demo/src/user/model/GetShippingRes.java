@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+//배송지 조회
 public class GetShippingRes { // GetShippingRes -> mypage > 배송지설정 -> 유저가 등록해둔 주소관리 리스트가 나옴.
     private String receiverName; // 수령인 이름
     private String address; // 수령인 주소
