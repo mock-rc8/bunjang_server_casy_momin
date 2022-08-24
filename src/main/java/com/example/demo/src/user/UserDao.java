@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
+import static com.example.demo.config.BaseResponseStatus.FAILED_TO_LOGIN;
 import static com.example.demo.config.BaseResponseStatus.PASSWORD_DECRYPTION_ERROR;
 
 @Repository //  [Persistence Layer에서 DAO를 명시하기 위해 사용]
@@ -43,8 +44,8 @@ public class UserDao {
     //회원가입
     public int createUser(PostUserReq postUserReq){
         int lastInsertId;
-        String createUserQuery = "insert into Users (userName, birthDate, phoneNum, carrier,password,accounts,updated,created,status) VALUES (?,?,?,?,?,0,now(),now(),'A');";
-        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getBirthDate(), postUserReq.getPhoneNum(), postUserReq.getCarrier(),postUserReq.getPassword()};
+        String createUserQuery = "insert into Users (userName, residentNumLast ,residentNumFirst , phoneNum, carrier,password) VALUES (?,?,?,?,?,?);";
+        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getResidentNumLast(),postUserReq.getResidentNumFirst(), postUserReq.getPhoneNum(), postUserReq.getCarrier(),postUserReq.getPassword()};
 
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
@@ -97,39 +98,57 @@ public class UserDao {
     public User userLogIn(PostLoginReq postLoginReq) throws BaseException {
 
 
-        String getLogInQuery = "select Users.ID,userName,birthDate,carrier,phoneNum,password,Users.status,Store.storeName from Users " +
-                "join Store on Store.userID=Users.ID "+
-                "where password = ? and birthDate = ? and phoneNum=? "; // 해당 email을 만족하는 User의 정보들을 조회한다.
-
-
+        String getLogInQuery =
+                "select ID,userName,residentNumLast ,residentNumFirst,carrier,phoneNum,password,status from Users " +
+                "where password = ? and residentNumLast = ? and phoneNum = ? and residentNumFirst = ? and userName=? and carrier = ? ";
         //암호화된 비밀번호를 params로 넣어준다
         String pwdParams;
         try{
-
-            pwdParams=new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postLoginReq.getPassword());
+            pwdParams=new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(postLoginReq.getPassword());// 로그인 시 request받은 비밀번호 암호화 -> 회원 검색을 위함
             System.out.println(pwdParams);
-
         }catch (Exception ignored) {
-
             System.out.println(ignored);
             throw new BaseException(PASSWORD_DECRYPTION_ERROR);
         }
-        Object[] logInParams = new Object[]{pwdParams, postLoginReq.getBirthDate(),postLoginReq.getPhoneNum()};
+        if(!checkPassword(postLoginReq).equals(pwdParams)){
+            throw new BaseException(FAILED_TO_LOGIN);
+        }
+        Object[] logInParams = new Object[]{
+                pwdParams,
+                postLoginReq.getResidentNumLast(),
+                postLoginReq.getPhoneNum(),
+                postLoginReq.getResidentNumFirst(),
+                postLoginReq.getName(),
+                postLoginReq.getCarrier()};
 
 
         return this.jdbcTemplate.queryForObject(getLogInQuery,
                 (rs, rowNum) -> new User(
                         rs.getInt("ID"),
                         rs.getString("userName"),
-                        rs.getString("birthDate"),
+                        rs.getString("residentNumLast"),
+                        rs.getString("residentNumFirst"),
                         rs.getString("carrier"),
                         rs.getString("phoneNum"),
                         rs.getString("password"),
-                        rs.getString("status"),
-                        rs.getString("storeName")
+                        rs.getString("status")
                 ), logInParams// RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
 
         ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+    }
+    public String checkPassword(PostLoginReq postLoginReq){
+        String getcheckPasswordQuery =
+                "select password from Users\n" +
+                        "where residentNumLast = ? and phoneNum = ? and residentNumFirst = ? and userName=? and carrier = ?;";
+        Object[] checkPasswordParams = new Object[]{
+                postLoginReq.getResidentNumLast(),
+                postLoginReq.getPhoneNum(),
+                postLoginReq.getResidentNumFirst(),
+                postLoginReq.getName(),
+                postLoginReq.getCarrier()};
+        return this.jdbcTemplate.queryForObject(getcheckPasswordQuery,
+                String.class,
+                checkPasswordParams);
     }
     // User 테이블에 존재하는 전체 유저들의 정보 조회
     public List<GetUserRes> getUsers() {

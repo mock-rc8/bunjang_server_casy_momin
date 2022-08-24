@@ -13,11 +13,10 @@ import lombok.*;
 public class User {
     private int userIdx;
     private String userName;
-    private String birthDate;
+    private String residentNumLast; // 주민 뒷자리 1
+    private String residentNumFirst; // 주민 앞자리 6
     private String carrier;
     private String phoneNum;
     private String password;
     private String status;
-    private String storeName;
-
 }
