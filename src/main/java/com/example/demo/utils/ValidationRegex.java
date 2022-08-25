@@ -40,5 +40,36 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
     }
+     //0825 17시
+    
+    /*
+    [PATCH] 상점명
+     */
+
+    //상점명 validation
+    public static boolean isRegexStoreName(String target){
+        String regex="^[A-Za-z0-9ㄱ-ㅎ가-힣]{1,10}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.find();
+
+    }
+
+    
+    //상점 url validation체크
+    /*
+    아래와 같은 방식이 가능
+    www.web.site(O)
+    https://web.site.sth(O)
+    http://web.site(O)
+    https://june.me(O)
+     */
+    public static boolean isRegexStoreURL(String target){
+        String regex="^((http|https)://)?(www.)?([a-zA-Z0-9]+)\\.[a-z]+([a-zA-z0-9.?#]+)?";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.find();
+
+    }
     // 날짜 형식, 전화 번호 형식 등 여러 Regex 인터넷에 검색하면 나옴.
 }
