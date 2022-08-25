@@ -105,7 +105,7 @@ public class UserController {
      * [POST] /users/log-in
      */
     @ResponseBody
-    @PostMapping("/log-in")
+    @RequestMapping(value = "/log-in", method = RequestMethod.POST)
     public BaseResponse<PostLoginRes> logIn(@RequestBody PostLoginReq postLoginReq) {
         try {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
