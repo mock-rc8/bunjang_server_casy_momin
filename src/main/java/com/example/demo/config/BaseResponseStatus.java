@@ -55,7 +55,8 @@ public enum BaseResponseStatus {
     // [POST] /users
     DUPLICATED_EMAIL(false, 3013, "중복된 이메일입니다."),
     FAILED_TO_LOGIN(false,3014,"없는 아이디거나 비밀번호가 틀렸습니다."),
-
+    //[POST] /users/log-in 로그인
+    FAILED_TO_LOGIN_PASSWORD(false,3015,"비밀번호가 틀렸습니다."),
 
 
     /**
@@ -63,6 +64,8 @@ public enum BaseResponseStatus {
      */
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
+    //[POST] /users/heart
+    FAILED_FROM_HEART_PRODUCT_ID(false,4013,"찜을 다시 시도해주세요."),
 
     //[PATCH] /users/{userIdx}
     MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
