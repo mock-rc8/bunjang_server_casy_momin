@@ -104,7 +104,28 @@ public enum BaseResponseStatus {
     POST_PRODUCTS_NULL_EXPLAIN(false,5007,"상품소개는 10자 이상으로 적어주세요."),
 
     // 주소 넣어주지 않았을 때
-    POST_PRODUCTS_NULL_ADDRESS(false,5008,"주소를 입력해주세요.");
+    POST_PRODUCTS_NULL_ADDRESS(false,5008,"주소를 입력해주세요."),
+    /*
+    [PATCH] 상점정보 수정
+     */
+
+    //validation
+    MODIFY_FAIL_STORENAME(false,5009,"상점명은 한글,영어 숫자 최대 10자입니다."),
+
+    MODIFY_FAIL_STOREURL(false,5010,"상점주소는 알파벳 소문자와 숫자만 가능합니다."),
+
+    MODIFY_FAIL_ACCESSTIME(false,5011,"연락 가능 시간 수정에 실패했습니다."),
+
+    MODIFY_FAIL_STORE_EXPLAINATION(false,5012,"상점소개는 1000자 이내입니다."),
+
+    MODIFY_FAIL_POLICY(false,5013,"교환환불 정책은 1000자 이내만 가능합니다."),
+
+    MODIFY_FAIL_CAUTION(false,5014,"유의사항은 1000자이내만 가능합니다."),
+
+    //dao단에서 update 실패했을 때
+
+    MODIFY_FAIL_STOREINFO(false,5015,"상점 정보 수정에 실패했습니다. (dao update)");
+
 
     // 6000 : 필요시 만들어서 쓰세요
 
