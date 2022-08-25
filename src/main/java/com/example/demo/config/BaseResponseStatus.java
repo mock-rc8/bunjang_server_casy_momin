@@ -124,7 +124,11 @@ public enum BaseResponseStatus {
 
     //dao단에서 update 실패했을 때
 
-    MODIFY_FAIL_STOREINFO(false,5015,"상점 정보 수정에 실패했습니다. (dao update)");
+    MODIFY_FAIL_STOREINFO(false,5015,"상점 정보 수정에 실패했습니다. (dao update)"),
+    //20220825 오후 7시 여기서부터
+    
+    //가격이 500원 미만일때 번개페이 사용불가
+    POST_FAIL_PRODUCT_PAY(false,5016,"500원미만은 번개페이 사용이 불가합니다.");
 
 
     // 6000 : 필요시 만들어서 쓰세요
