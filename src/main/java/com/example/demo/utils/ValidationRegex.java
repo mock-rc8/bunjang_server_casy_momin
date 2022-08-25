@@ -40,14 +40,14 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
     }
-     //0825 17시
-    
+    //0825 17시
+
     /*
     [PATCH] 상점명
      */
 
     //상점명 validation
-    public static boolean isRegexStoreName(String target){
+    public static boolean isRegexModifyStoreName(String target){
         String regex="^[A-Za-z0-9ㄱ-ㅎ가-힣]{1,10}$";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(target);
@@ -55,7 +55,7 @@ public class ValidationRegex {
 
     }
 
-    
+
     //상점 url validation체크
     /*
     아래와 같은 방식이 가능
