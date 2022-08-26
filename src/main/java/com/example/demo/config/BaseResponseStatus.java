@@ -37,7 +37,7 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_STORE_NAME(false, 2012, "상점명을 다시 확인해주세요."),
 
     //회원가입
-    POST_USERS_EXISTS_STORE_NAME(false,2017,"중복된 상점 이름입니다."),
+    POST_USERS_EXISTS_STORE_NAME(false,2017,"동일한 상점명이 있습니다."),
     //배송지 추가, 수정
     POST_USERS_EXISTS_SHIPPING_INFO(false,2018,"같은 배송지가 존재합니다."),
     //로그인
