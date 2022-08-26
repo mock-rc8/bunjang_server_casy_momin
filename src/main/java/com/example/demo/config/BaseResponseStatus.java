@@ -66,7 +66,7 @@ public enum BaseResponseStatus {
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
     //[POST] /users/heart
     FAILED_FROM_HEART_PRODUCT_ID(false,4013,"찜을 다시 시도해주세요."),
-
+    POST_HEART_EXISTS(false,4015,"이미 찜한 상품입니다."),
     //[PATCH] /users/{userIdx}
     MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
 
