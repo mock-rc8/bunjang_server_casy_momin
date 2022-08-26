@@ -130,7 +130,15 @@ public enum BaseResponseStatus {
     //가격이 500원 미만일때 번개페이 사용불가
     POST_FAIL_PRODUCT_PAY(false,5016,"500원미만은 번개페이 사용이 불가합니다."),
     //220826 여기부터 하면됨
-    GET_FAIL_STORE_REVIEW(false,5017,"상점후기가 없습니다.");
+    GET_FAIL_STORE_REVIEW(false,5017,"상점후기가 없습니다."),
+    //220826 22시
+    POST_FAIL_NULL_POINT(false,5018,"사용 가능한 포인트가 없어요."),
+
+    POST_FAIL_MAX_POINT(false,5019,"가지고 있는 포인트보다 더 많은 포인트를 사용할 수 없습니다."),
+
+    POST_FAIL_NULL_REQUIREMENT(false,5020,"배송시 요구사항을 입력해주세요."),
+
+    POST_FAIL_NULL_PAYMENT(false,5021,"결제 수단을 입력해주세요.");
 
 
     // 6000 : 필요시 만들어서 쓰세요
