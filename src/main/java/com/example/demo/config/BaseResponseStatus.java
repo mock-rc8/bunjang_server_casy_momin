@@ -138,7 +138,13 @@ public enum BaseResponseStatus {
 
     POST_FAIL_NULL_REQUIREMENT(false,5020,"배송시 요구사항을 입력해주세요."),
 
-    POST_FAIL_NULL_PAYMENT(false,5021,"결제 수단을 입력해주세요.");
+    POST_FAIL_NULL_PAYMENT(false,5021,"결제 수단을 입력해주세요."),
+    //8월27일 오전 9시 (아직 커밋안함)
+
+    MODIFY_FAIL_PRODUCTS_INFO(false,5022,"상품정보 수정에 실패했습니다."),
+    MODIFY_FAIL_PRODUCTS_STATUS(false,5023,"상품상태 수정에 실패했습니다."),
+
+    MODIFY_FAIL_MISMATCH_UPLOADER(false,5024,"내가 판매하지 않은 상품은 수정할 수 없습니다.");
 
 
     // 6000 : 필요시 만들어서 쓰세요
