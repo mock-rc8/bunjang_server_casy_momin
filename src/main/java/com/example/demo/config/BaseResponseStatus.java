@@ -146,7 +146,11 @@ public enum BaseResponseStatus {
     MODIFY_FAIL_PRODUCTS_INFO(false,5022,"상품정보 수정에 실패했습니다."),
     MODIFY_FAIL_PRODUCTS_STATUS(false,5023,"상품상태 수정에 실패했습니다."),
 
-    MODIFY_FAIL_MISMATCH_UPLOADER(false,5024,"내가 판매하지 않은 상품은 수정할 수 없습니다.");
+    MODIFY_FAIL_MISMATCH_UPLOADER(false,5024,"내가 판매하지 않은 상품은 수정할 수 없습니다."),
+    //8월27일 오후 9시 (아직 커밋안함)
+    DELETE_FAIL_PRODUCT(false,5025,"상품 삭제에 실패했습니다."),
+
+    DELETE_FAIL_MISMATCH_UPLOADER(false,5026,"내가 판매하지 않은 상품은 삭제할 수 없습니다.");
 
 
     // 6000 : 필요시 만들어서 쓰세요
