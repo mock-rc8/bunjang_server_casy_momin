@@ -66,14 +66,16 @@ public enum BaseResponseStatus {
      */
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
-    //[POST] /users/heart
-    FAILED_FROM_HEART_PRODUCT_ID(false,4013,"찜을 다시 시도해주세요."),
-    POST_HEART_EXISTS(false,4015,"이미 찜한 상품입니다."),
-    //[PATCH] /users/{userIdx}
-    MODIFY_FAIL_USER_INFO(false,4014,"유저정보 수정 실패"),
-
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),
+    //[POST] /users/heart
+    FAILED_FROM_HEART_PRODUCT_ID(false,4013,"찜을 다시 시도해주세요."),
+    //유저정보수정 /users/information
+    MODIFY_FAIL_USER_INFO(false,4014,"유저정보 수정 실패"),
+    POST_HEART_EXISTS(false,4015,"이미 찜한 상품입니다."),
+    //유저탈퇴 /users/d
+    DELETE_FAIL_USER(false,4016,"유저 탈퇴 실패"),
+
 
 
     // 5000 : 필요시 만들어서 쓰세요
