@@ -70,7 +70,7 @@ public enum BaseResponseStatus {
     FAILED_FROM_HEART_PRODUCT_ID(false,4013,"찜을 다시 시도해주세요."),
     POST_HEART_EXISTS(false,4015,"이미 찜한 상품입니다."),
     //[PATCH] /users/{userIdx}
-    MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
+    MODIFY_FAIL_USER_INFO(false,4014,"유저정보 수정 실패"),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),
