@@ -22,10 +22,6 @@ public enum BaseResponseStatus {
     INVALID_JWT(false, 2002, "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(false,2003,"권한이 없는 유저의 접근입니다."),
 
-    
-
-    // users
-    USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
     // [POST] /users
     POST_USERS_EMPTY_PHONE_NUMBER(false, 2004, "핸드폰 번호를 입력해주세요."),
     POST_USERS_DEFAULT_RANGE_PHONE_NUMBER(false, 2005, "핸드폰 번호를 4자리 이상 입력해주세요."),
@@ -33,6 +29,7 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_RESIDENT_NUMBER(false, 2007, "주민등록번호를 입력해주세요."),
     POST_USERS_INVALID_RESIDENT_NUMBER(false, 2008, "주민등록번호를 다시 확인해주세요."),
     POST_USERS_INVALID_USER_NAME(false, 2009, "이름을 다시 확인해주세요."),
+    POST_USERS_INVALID_ACCOUNT_NUM(false,2010,"계좌번호를 한번 더 확인해주세요"),
     POST_USERS_INVALID_PASSWORD(false, 2011, "비밀번호를 다시 확인해주세요."),
     POST_USERS_INVALID_STORE_NAME(false, 2012, "상점명을 다시 확인해주세요."),
 
@@ -77,7 +74,8 @@ public enum BaseResponseStatus {
     DELETE_FAIL_USER(false,4016,"유저 탈퇴 실패"),
     //차단 /users/block
     BLOCK_FAIL_STORE(false,4017,"이미 차단한 상점입니다."),
-
+    //계좌 /users/accounts
+    ADD_ACOUNT_FAIL(false,4018,"이미 존재하는 계좌입니다."),
 
 
     // 5000 : 필요시 만들어서 쓰세요
