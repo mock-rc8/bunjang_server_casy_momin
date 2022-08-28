@@ -29,7 +29,8 @@ public class ValidationRegex {
         return matcher.find();
     }
     public static boolean isRegexPassword(String target) { // 비밀번호 정규식 - 최소 8글자, 대문자 1개, 소문자 1개, 숫자 1개, 특수문자 1개
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+         //String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        String regex = "^(?=.[A-Za-z])(?=.\\d)(?=.[~!@#$%^&()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,}$";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
@@ -70,6 +71,14 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
 
+    }
+    
+    //0828 21시
+    public static boolean isRegexAccountNum(String target){
+        String regex = "(^[0-9]+)$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.find();
     }
     // 날짜 형식, 전화 번호 형식 등 여러 Regex 인터넷에 검색하면 나옴.
 }
