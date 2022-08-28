@@ -75,6 +75,8 @@ public enum BaseResponseStatus {
     POST_HEART_EXISTS(false,4015,"이미 찜한 상품입니다."),
     //유저탈퇴 /users/d
     DELETE_FAIL_USER(false,4016,"유저 탈퇴 실패"),
+    //차단 /users/block
+    BLOCK_FAIL_STORE(false,4017,"이미 차단한 상점입니다."),
 
 
 
