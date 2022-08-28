@@ -76,6 +76,10 @@ public enum BaseResponseStatus {
     BLOCK_FAIL_STORE(false,4017,"이미 차단한 상점입니다."),
     //계좌 /users/accounts
     ADD_ACOUNT_FAIL(false,4018,"이미 존재하는 계좌입니다."),
+    //거래내역의 판매내역
+    GET_SALE_FAIL(false,4019,"판매 내역이 없습니다."),
+    //거래내역의 구매내역
+    GET_PURCHASE_FAIL(false,4020,"구매 내역이 없습니다."),
 
 
     // 5000 : 필요시 만들어서 쓰세요
