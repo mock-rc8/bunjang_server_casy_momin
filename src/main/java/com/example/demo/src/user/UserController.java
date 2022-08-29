@@ -146,6 +146,22 @@ public class UserController {
         }
     }
     /**
+     * 자동로그인 API
+     * [GET] /users/log-in/auto
+     */
+    @ResponseBody
+    @GetMapping("/log-in/auto")
+    public BaseResponse<GetAutoLoginRes> autoLogin(){
+        try {
+            int userIdx = jwtService.getUserIdx();
+            GetAutoLoginRes getAutoLoginRes = userProvider.autoLogin(userIdx);
+            return new BaseResponse<>(getAutoLoginRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+    /**
      * 상점명 조회 API
      * [GET] /users/store-names
      */
