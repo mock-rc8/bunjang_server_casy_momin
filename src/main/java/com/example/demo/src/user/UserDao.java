@@ -927,4 +927,17 @@ public class UserDao {
                         "where t.userID=?)";
         return this.jdbcTemplate.queryForObject(checkPurchasesQuery,int.class,userIdx);
     }
+    //자동로그인
+    public GetAutoLoginRes autoLogin(int userIdx){
+        String getLoginRes =
+                "select u.ID,s.status\n" +
+                "from Users u\n" +
+                "join Store s on u.ID = s.userID\n" +
+                "where u.ID=?";
+        return this.jdbcTemplate.queryForObject(getLoginRes,
+                (rs, rowNum) -> new GetAutoLoginRes(
+                        rs.getInt("u.ID"),
+                        rs.getString("s.status")
+                ),userIdx);
+    }
 }
