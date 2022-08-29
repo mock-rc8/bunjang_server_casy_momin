@@ -333,4 +333,13 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+    // 자동로그인
+    public GetAutoLoginRes autoLogin(int userIdx) throws BaseException{
+        try{
+            return userDao.autoLogin(userIdx);
+        }catch (Exception exception){
+            System.out.println(exception);
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
