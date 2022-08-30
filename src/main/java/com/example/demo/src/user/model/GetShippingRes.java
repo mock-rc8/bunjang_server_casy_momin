@@ -12,6 +12,7 @@ public class GetShippingRes { // GetShippingRes -> mypage > 배송지설정 -> �
     private int shippingIdx; // 배송지ID
     private String receiverName; // 수령인 이름
     private String address; // 수령인 주소
+    private String detailAddress;
     private String receiverPhoneNum; // 수령인 연락처
     private String status; // 배송지 상태
 }
