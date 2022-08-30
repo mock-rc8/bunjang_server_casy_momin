@@ -194,7 +194,7 @@ public class ProductDao {
 
 
                 "(select count(productsID) from Heart where Heart.productsID=Products.ID and status='A') as heartCount," +
-                "(select exists(select userID from Heart where userID=? AND Heart.productsID=Products.ID)) as userHeart," +
+                "(select exists(select userID from Heart where userID=? AND Heart.productsID=Products.ID and status='A')) as userHeart," +
                 "pay " +
                 "from Products " +
                 "where Products.status='A' and Products.saleStatus='판매 중' ";
