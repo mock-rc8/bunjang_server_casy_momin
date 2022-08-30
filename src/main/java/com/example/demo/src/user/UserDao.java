@@ -561,7 +561,7 @@ public class UserDao {
     }
     // 유저의 찜 수 반환
     public GetHeartNumberRes getHeartNumber(int userIdx){
-        String getHeartNumQuery = "select count(productsID) as heartsNum from Heart where userID=?";
+        String getHeartNumQuery = "select count(productsID) as heartsNum from Heart where userID=? and status='A'";
         return this.jdbcTemplate.queryForObject(getHeartNumQuery,(rs, rowNum) -> new GetHeartNumberRes(rs.getInt("heartsNum")), userIdx);
     }
     // 유저의 팔로잉 수 반환
