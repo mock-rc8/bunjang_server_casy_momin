@@ -311,16 +311,6 @@ public class UserDao {
                 int.class,
                 userIdx,postShippingReq.getReceiverName(),postShippingReq.getReceiverPhoneNum(),postShippingReq.getAddress(),postShippingReq.getDetailAddress());
     }
-    // 배송지 추가시 배송지 삭제전적이 있는지 검사하는 함수
-    public int checkShippingBefore(int userIdx,PostShippingReq postShippingReq){ // 5가지 데이터 모두 비교해야함.
-        String checkShippingInfoQuery =
-                "select exists(select ID\n" +       // 해당 유저가 가진 배송지 정보 전체를 검사 -> status가 A여야 함.
-                        "              from Address\n" +
-                        "              where userID = ? and recieverName = ? and recieverPhoneNum = ? and address = ? and detailAddress = ? and status='D')";
-        return this.jdbcTemplate.queryForObject(checkShippingInfoQuery,
-                int.class,
-                userIdx,postShippingReq.getReceiverName(),postShippingReq.getReceiverPhoneNum(),postShippingReq.getAddress(),postShippingReq.getDetailAddress());
-    }
     // 배송지 수정시 중복 값 체크 함수
     public int checkShippingInfoPatch(int userIdx,PatchShippingReq patchShippingReq){ // 4가지 데이터 모두 비교해야함.
         String checkShippingInfoQuery =
@@ -331,16 +321,7 @@ public class UserDao {
                 int.class,
                 patchShippingReq.getShippingIdx(),userIdx,patchShippingReq.getReceiverName(),patchShippingReq.getReceiverPhoneNum(),patchShippingReq.getAddress(),patchShippingReq.getDetailAddress());
     }
-    // 배송지 수정시 이전에 삭제한 전적이 있는지 검사하는 함수
-    public int checkShippingInfoPatchBefore(int userIdx,PatchShippingReq patchShippingReq){ // 4가지 데이터 모두 비교해야함.
-        String checkShippingInfoQuery =
-                "select exists(select ID\n" + // 해당 유저가 가진 배송지 전체 중, 수정하고있는 배송지를 제외한 rows 검사
-                        "              from Address\n" +
-                        "              where ID != ? and userID=? and recieverName = ? and recieverPhoneNum = ? and address = ? and detailAddress = ? and status = 'D')";
-        return this.jdbcTemplate.queryForObject(checkShippingInfoQuery,
-                int.class,
-                patchShippingReq.getShippingIdx(),userIdx,patchShippingReq.getReceiverName(),patchShippingReq.getReceiverPhoneNum(),patchShippingReq.getAddress(),patchShippingReq.getDetailAddress());
-    }
+    
 
     // 차단상점 설정
     @Transactional(rollbackFor = {Exception.class})
