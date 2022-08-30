@@ -228,43 +228,7 @@ public class UserDao {
     }
     // 배송지 추가
     public PostShippingRes createShippingInfo(int userIdx, PostShippingReq postShippingReq){
-        if(checkShippingBefore(userIdx,postShippingReq)==1){ // 이미 삭제한 전적이 있는 배송지 정보라면?
-            String toggleStatusQuery = "update Address set status='A' where userID = ? and recieverName=? and recieverPhoneNum=? and address=? and detailAddress=?";
-            Object[] toggleStatusParams = new Object[]{
-                    userIdx,
-                    postShippingReq.getReceiverName(),
-                    postShippingReq.getReceiverPhoneNum(),
-                    postShippingReq.getAddress(),
-                    postShippingReq.getDetailAddress()
-            };
-            this.jdbcTemplate.update(toggleStatusQuery, toggleStatusParams); // status 값만 A로 바꾼다.
-            String modifyInfoBeforeQuery =
-                    "select ID\n" +
-                            "from Address\n" +
-                            "where userID=? and recieverName = ? and recieverPhoneNum = ? and address = ? and detailAddress = ? and status = 'A'";
-            Object[] modifyInfoBeforeParams = new Object[]{
-                    userIdx,
-                    postShippingReq.getReceiverName(),
-                    postShippingReq.getReceiverPhoneNum(),
-                    postShippingReq.getAddress(),
-                    postShippingReq.getDetailAddress()};
-            int beforeShippingIdx = this.jdbcTemplate.queryForObject(modifyInfoBeforeQuery,int.class,modifyInfoBeforeParams);
-
-
-            String ShippingListBeforeQuery =
-                    "select ID,recieverName,recieverPhoneNum,address,detailAddress,status\n" +
-                            "from Address\n" +
-                            "where userID=? and ID=?";
-            return this.jdbcTemplate.queryForObject(ShippingListBeforeQuery,
-                    (rs, rowNum) -> new PostShippingRes(
-                            rs.getInt("ID"),
-                            rs.getString("recieverName"),
-                            rs.getString("recieverPhoneNum"),
-                            rs.getString("address"),
-                            rs.getString("detailAddress"),
-                            rs.getString("status")),
-                    userIdx,beforeShippingIdx);
-        }
+        
         String createShippingAddressQuery =
                 "insert into Address(userid, recievername, recieverphonenum, address, detailaddress) \n" + // 배송지 추가 쿼리
                 "values (?,?,?,?,?)";
@@ -296,39 +260,7 @@ public class UserDao {
     }
     // 배송지 수정
     public PatchShippingRes modifyShippingInfo(int userIdx,PatchShippingReq patchShippingReq){
-        if(checkShippingInfoPatchBefore(userIdx,patchShippingReq)==1){ // 이미 삭제한 전적이 있는 행이 있다면?
-            String modifyInfoBeforeQuery =
-                    "select ID\n" +
-                    "from Address\n" +
-                    "where ID != ? and userID=? and recieverName = ? and recieverPhoneNum = ? and address = ? and detailAddress = ? and status = 'D'";
-            Object[] modifyInfoBeforeParams = new Object[]{
-                    patchShippingReq.getShippingIdx(),
-                    userIdx,
-                    patchShippingReq.getReceiverName(),
-                    patchShippingReq.getReceiverPhoneNum(),
-                    patchShippingReq.getAddress(),
-                    patchShippingReq.getDetailAddress()};
-            int beforeShippingIdx = this.jdbcTemplate.queryForObject(modifyInfoBeforeQuery,int.class,modifyInfoBeforeParams); // 여기까지 수행하면 삭제한 전적이 있는 행의 배송지 ID가 추출되어야 한다.
-            logger.warn(""+beforeShippingIdx);
-
-            String modifyShippingAddressBeforeQuery = "delete from Address where ID=?";
-            this.jdbcTemplate.update(modifyShippingAddressBeforeQuery, beforeShippingIdx); // 여기까지 수행하면 D였던 데이터가 아예 삭제된다.
-
-            logger.warn("4005");
-            String ShippingListQuery =
-                    "select ID,recieverName,recieverPhoneNum,address,detailAddress,status\n" + // 배송지 정보 조회 쿼리
-                            "from Address\n" +
-                            "where ID=? and userID=?";
-            return this.jdbcTemplate.queryForObject(ShippingListQuery,
-                    (rs, rowNum) -> new PatchShippingRes(
-                            rs.getInt("ID"),
-                            rs.getString("recieverName"),
-                            rs.getString("recieverPhoneNum"),
-                            rs.getString("address"),
-                            rs.getString("detailAddress"),
-                            rs.getString("status")),
-                    patchShippingReq.getShippingIdx(),userIdx);
-        }
+        
         String modifyShippingAddressQuery =
                         "update Address set recieverName=? ,recieverPhoneNum=? ,address=? ,detailAddress=? " + // 배송지 수정 쿼리
                         "where ID=? and userID=?";
