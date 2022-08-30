@@ -213,7 +213,7 @@ public class UserDao {
     // 배송지 조회
     public List<GetShippingRes> getShippingList(int userIdx){
         String getShippingListQuery =
-                "select ID,recieverName,address,recieverPhoneNum,status\n" + // 배송지 정보 조회 쿼리
+                "select ID,recieverName,address,detailAddress,recieverPhoneNum,status\n" + // 배송지 정보 조회 쿼리
                 "from Address\n" +
                 "where userID=? and status = 'A'";
         return this.jdbcTemplate.query(getShippingListQuery,
@@ -221,6 +221,7 @@ public class UserDao {
                         rs.getInt("ID"),
                         rs.getString("recieverName"),
                         rs.getString("address"),
+                        rs.getString("detailAddress"),
                         rs.getString("recieverPhoneNum"),
                         rs.getString("status")),
                 userIdx);
