@@ -46,6 +46,7 @@ public class UserDao {
 
 
     //회원가입
+    @Transactional(rollbackFor = {Exception.class})
     public int createUser(PostUserReq postUserReq){
         int lastInsertId;
         String createUserQuery = "insert into Users (userName, residentNumLast ,residentNumFirst , phoneNum, carrier,password) VALUES (?,?,?,?,?,?)";
@@ -196,6 +197,7 @@ public class UserDao {
                 postLoginReq.getName(),pwdParams,postLoginReq.getResidentNumFirst(),postLoginReq.getResidentNumLast(),postLoginReq.getPhoneNum(),postLoginReq.getCarrier());
     }
     // 로그아웃
+    @Transactional(rollbackFor = {Exception.class})
     public PostLogoutRes logOut(int userIdx){
         String logOutQuery = "update Users set status = 'S' where ID = ?";
         Object[] logOutParams = new Object[]{userIdx};
@@ -227,6 +229,7 @@ public class UserDao {
                 userIdx);
     }
     // 배송지 추가
+    @Transactional(rollbackFor = {Exception.class})
     public PostShippingRes createShippingInfo(int userIdx, PostShippingReq postShippingReq){
         
         String createShippingAddressQuery =
@@ -259,6 +262,7 @@ public class UserDao {
                 lastInsertId);
     }
     // 배송지 수정
+    @Transactional(rollbackFor = {Exception.class})
     public PatchShippingRes modifyShippingInfo(int userIdx,PatchShippingReq patchShippingReq){
         
         String modifyShippingAddressQuery =
@@ -290,6 +294,7 @@ public class UserDao {
     }
 
     //배송지 삭제
+    @Transactional(rollbackFor = {Exception.class})
     public PatchDeleteShippingRes deleteShippingInfo(int userIdx,PatchDeleteShippingReq patchDeleteShippingReq){
         String deleteShippingQuery = "update Address set status='D' where userID=? and ID=?";
         this.jdbcTemplate.update(deleteShippingQuery,userIdx,patchDeleteShippingReq.getShippingIdx());
@@ -378,6 +383,7 @@ public class UserDao {
                 userIdx);
     }
     // 차단상점 삭제
+    @Transactional(rollbackFor = {Exception.class})
     public PatchBlockRes deleteBlockStore(int userIdx,PatchBlockReq patchBlockReq){
         String deleteBlockStoreQuery = "update Block set status='D' where userID=? and blockUserID=?";
         this.jdbcTemplate.update(deleteBlockStoreQuery,userIdx,patchBlockReq.getStoreIdx());
@@ -468,6 +474,7 @@ public class UserDao {
 
     }
     //찜 취소
+    @Transactional(rollbackFor = {Exception.class})
     public PatchHeartRes deleteHeartProduct(int userIdx,PatchHeartReq patchHeartReq){
         String deleteHeartQuery = "update Heart set status = 'D' where userID=? and productsID=?";
         Object[] deleteHeartParams = new Object[]{
@@ -686,6 +693,7 @@ public class UserDao {
         ),userIdx);
     }
     //계좌 등록 함수 -> service
+    @Transactional(rollbackFor = {Exception.class})
     public PostAccountRes addAccount(int userIdx,PostAccountReq postAccountReq){
         String addAccountQuery = "insert into Account(userID, accountHolder, bankName, accountNumber) values (?,?,?,?)";
         Object[] addAccountParams = new Object[]{
@@ -729,6 +737,7 @@ public class UserDao {
                 ),userIdx);
     }
     //계좌 수정 함수
+    @Transactional(rollbackFor = {Exception.class})
     public PatchAccountRes modifyAccount(int userIdx,PatchAccountReq patchAccountReq){
         String modifyAccountQuery = "update Account set accountHolder=? , bankName=? , accountNumber=? where ID=? and userID=?";
         Object[] modifyAccountParams = new Object[]{
@@ -764,6 +773,7 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(checkQuery,int.class,checkParams);
     }
     //계좌 삭제 함수
+    @Transactional(rollbackFor = {Exception.class})
     public PatchDeleteAccountRes deleteAccount(int userIdx,PatchDeleteAccountReq patchDeleteAccountReq){
         String deleteAccountQuery = "update Account set status='D' where userID=? and ID=?";
         this.jdbcTemplate.update(deleteAccountQuery,userIdx,patchDeleteAccountReq.getAccountIdx());
