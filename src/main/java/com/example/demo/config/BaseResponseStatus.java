@@ -39,7 +39,7 @@ public enum BaseResponseStatus {
     POST_USERS_EXISTS_SHIPPING_INFO(false,2018,"같은 배송지가 존재합니다."),
     //로그인
     POST_USERS_INACTIVE_USER(false,2019,"휴면처리된 회원입니다."),
-    POST_USERS_DELETE_USER(false,2020,"탈퇴 후 7일간은 다시 가입하실 수 없습니다."),
+    POST_USERS_DELETE_USER(false,2020,"탈퇴한 회원입니다."),
     POST_USERS_NOT_FOUND(false,2021,"가입하지 않은 회원입니다."),
     // 찜
     GET_FAIL_HEART(false,2022,"찜한 상품이 없습니다."),
