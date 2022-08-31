@@ -106,7 +106,9 @@ public class UserDao {
                 userIdx);
     }
     // 변경한 유저 정보 가져오기
-    public PatchUserRes modifyUserInfo(int userIdx){
+    public PatchUserRes modifyUserInfo(int userIdx,PatchUserReq patchUserReq){
+        String updateUserQuery = "update Users set gender? where ID=?";
+        this.jdbcTemplate.update(updateUserQuery,patchUserReq.getGender(),userIdx);
         String modifyUserInfoQuery = "select gender, phoneNum from Users where ID = ?";
         return this.jdbcTemplate.queryForObject(modifyUserInfoQuery,
                 (rs, rowNum) -> new PatchUserRes(
