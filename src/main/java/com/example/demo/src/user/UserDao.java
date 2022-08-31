@@ -138,6 +138,7 @@ public class UserDao {
     }
 
     // 로그인: 받아온 비밀번호,생년월일,이름에 모두 해당하는 유저를 찾고 -> 그 유저의 ID 값을 반환해준다.
+    @Transactional(rollbackFor = {Exception.class})
     public User userLogIn(PostLoginReq postLoginReq) throws BaseException {
         //암호화된 비밀번호를 params로 넣어준다
         String pwdParams;
@@ -156,6 +157,17 @@ public class UserDao {
         if(loginFlag(pwdParams,postLoginReq) == 0){
             throw new BaseException(POST_USERS_NOT_FOUND); // 일치하는 회원정보 없을 때 2021 오류코드
         }
+        String updateStatusQuery =
+                "update Users set status='A' " +
+                " where where password = ? and residentNumLast = ? and phoneNum = ? and residentNumFirst = ? and userName=? and carrier = ?";
+        Object[] updateStatusParams = new Object[]{
+                pwdParams,
+                postLoginReq.getResidentNumLast(),
+                postLoginReq.getPhoneNum(),
+                postLoginReq.getResidentNumFirst(),
+                postLoginReq.getName(),
+                postLoginReq.getCarrier()};
+        this.jdbcTemplate.update(updateStatusQuery,updateStatusParams);
         //일치 검사를 다 마치면 select해온다.
         String getLogInQuery =
                 "select ID,userName,residentNumLast ,residentNumFirst,carrier,phoneNum,password,status from Users " +
