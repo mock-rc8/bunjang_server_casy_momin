@@ -90,6 +90,13 @@ public class UserDao {
                 String.class,
                 lastInsertId);
     }
+    // 마지막 회원가입자 유저 status값 가져오기 -> Service에서 호출
+    public String getUserStatus(int lastInsertId){
+        String getUserNameQuery = "select status from Users where ID=?";
+        return this.jdbcTemplate.queryForObject(getUserNameQuery,
+                String.class,
+                lastInsertId);
+    }
     // 로그인까지 완료 후 상점명 가져오기 jwt
     public GetStoreNameRes getStoreName(int userIdx){
         String getStoreNameQuery = "select storeName from Store where userID=?";
