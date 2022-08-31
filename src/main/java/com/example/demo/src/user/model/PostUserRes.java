@@ -16,4 +16,5 @@ public class PostUserRes { // 회원가입 Response
     private int userIdx;
     private String name;
     private String storeName;
+    private String status;
 }
