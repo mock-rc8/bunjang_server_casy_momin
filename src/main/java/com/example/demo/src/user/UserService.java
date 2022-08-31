@@ -188,7 +188,7 @@ public class UserService {
             if (result == 0) { // result값이 0이면 과정이 실패한 것이므로 에러 메서지를 보냅니다.
                 throw new BaseException(MODIFY_FAIL_USER_INFO); // 4014 : 유저정보 수정 실패
             }
-            return userProvider.modifyUserInfo(userIdx);
+            return userProvider.modifyUserInfo(userIdx,patchUserReq);
         } catch (Exception exception) { // DB에 이상이 있는 경우 에러 메시지를 보냅니다.
             throw new BaseException(DATABASE_ERROR);
         }
