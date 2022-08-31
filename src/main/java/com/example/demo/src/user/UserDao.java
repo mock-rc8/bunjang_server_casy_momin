@@ -159,7 +159,7 @@ public class UserDao {
         }
         String updateStatusQuery =
                 "update Users set status='A' " +
-                " where where password = ? and residentNumLast = ? and phoneNum = ? and residentNumFirst = ? and userName=? and carrier = ?";
+                " where password = ? and residentNumLast = ? and phoneNum = ? and residentNumFirst = ? and userName=? and carrier = ?";
         Object[] updateStatusParams = new Object[]{
                 pwdParams,
                 postLoginReq.getResidentNumLast(),
