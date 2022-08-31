@@ -95,6 +95,16 @@ public class UserController {
                 return new BaseResponse<>(POST_USERS_INVALID_STORE_NAME); // 2012 : 상점명 기본 표현식 예외
             }
             PostUserRes postUserRes = userService.createUser(postUserReq);
+            
+            if(postUserRes.getStatus().equals("R")){
+                return new BaseResponse<>(POST_USERS_INACTIVE_USER); // 2019 : 휴면처리 회원 R
+            }
+
+            //탈퇴한 유저 처리 -> 탈퇴한 회원입니다.
+            if(postUserRes.getStatus().equals("D")){
+                return new BaseResponse<>(POST_USERS_DELETE_USER); // 2020 : 탈퇴처리 회원 D
+            }
+          
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
