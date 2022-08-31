@@ -250,9 +250,9 @@ public class UserProvider {
     }
 
     //user 변경 후 성별,전화번호 조회
-    public PatchUserRes modifyUserInfo(int userIdx) throws BaseException{
+    public PatchUserRes modifyUserInfo(int userIdx,PatchUserReq patchUserReq) throws BaseException{
         try{
-            return userDao.modifyUserInfo(userIdx);
+            return userDao.modifyUserInfo(userIdx,patchUserReq);
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
