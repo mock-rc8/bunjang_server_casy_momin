@@ -64,8 +64,11 @@ public class UserService {
             String userName = userDao.getUserName(userIdx); // 마지막 회원가입자 userName
 
             String storeName = userDao.getStoreNameSignUp(userIdx); // 마지막 회원가입자 storeName
+                    
+            String userStatus = userDao.getUserStatus(userIdx);
+                    
             String jwt = jwtService.createJwt(userIdx); //jwt 발급
-            return new PostUserRes(jwt,userIdx,userName,storeName);
+            return new PostUserRes(jwt,userIdx,userName,storeName,userStatus);
         } catch (Exception exception) { // DB에 이상이 있는 경우 에러 메시지를 보냅니다.
             System.out.println(exception);
             throw new BaseException(DATABASE_ERROR);
