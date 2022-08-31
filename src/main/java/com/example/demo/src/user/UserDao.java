@@ -526,8 +526,8 @@ public class UserDao {
         String getFollowingQuery=
                 "select s.ID,s.storeImg,s.storeName, (select count(storeID) from Products where storeID= s.userID) as quantity,\n" +
                         "       (select count(userID) from Follow where followStoreID=f.followStoreID) as followers,\n" +
-                        "       (select group_concat(productsImg separator ',') from Products where storeID=s.userID) as representProductsImg,\n" +
-                        "       (select group_concat(price separator ',') from Products where storeID=s.userID) as representProductsPrice,\n" +
+                        "       (select substring_index(group_concat(productsImg separator ','), ',', 3) from Products where storeID=s.userID) as representProductsImg,\n" +
+                        "       (select substring_index(group_concat(Products.price  separator ','), ',', 3) from Products where storeID=s.userID) as representProductsPrice,\n" +
                         "       f.status\n" +
                         "from Follow f\n" +
                         "inner join Store s on s.userID = f.followStoreID\n" +
@@ -550,8 +550,8 @@ public class UserDao {
                 "select s.ID,s.storeImg,s.storeName,\n" +
                         "       (select count(storeID) from Products where storeID= s.ID) as quantity,\n" +
                         "       (select count(userID) from Follow where followStoreID = s.ID) as followersNum,\n" +
-                        "       (select group_concat(productsImg separator ',') from Products where storeID=s.userID) as representProductsImg,\n" +
-                        "       (select group_concat(price separator ',') from Products where storeID=s.userID) as representProductsPrice\n" +
+                        "       (select substring_index(group_concat(productsImg separator ','), ',', 3) from Products where storeID=s.userID) as representProductsImg,\n" +
+                        "       (select substring_index(group_concat(Products.price  separator ','), ',', 3) from Products where storeID=s.userID) as representProductsPrice\n" +
                         "from Store s\n" +
                         "where s.ID != ? and (select count(storeID) from Products where storeID= s.ID) >0";
         return this.jdbcTemplate.query(getRecommendQuery,
