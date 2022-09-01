@@ -194,8 +194,8 @@ public class ProductDao {
 
 
 
-                "(select count(productsID) from Heart where Heart.productsID=Products.ID) as heartCount," +
-                "(select exists(select userID from Heart where userID=? AND Heart.productsID=Products.ID)) as userHeart," +
+                "(select count(productsID) from Heart where Heart.productsID=Products.ID and Heart.status='A') as heartCount," +
+                "(select exists(select userID from Heart where userID=? AND Heart.productsID=Products.ID and Heart.status='A')) as userHeart," +
                 "pay " +
                 "from Products " +
                 "where Products.status='A' and Products.saleStatus='판매 중' ";
@@ -279,7 +279,7 @@ public class ProductDao {
                 "                                end as created, " +
 
                 "                (select count(productsID) from Views where Views.productsID=Products.ID) as views," +
-                "                (select count(Heart.productsID) from Heart where Heart.productsID=Products.ID) as heartCount, " +
+                "                (select count(Heart.productsID) from Heart where Heart.productsID=Products.ID and Heart.status='A') as heartCount, " +
                 "                productStatus,quantity,shippingFee,exchange,Products.productExplain " +
 
                 "                from Products " +
