@@ -1,0 +1,22 @@
+package com.example.demo.src.store.model;
+
+
+import lombok.*;
+
+
+
+@Getter // 해당 클래스에 대한 접근자 생성
+@Setter // 해당 클래스에 대한 설정자 생성
+@AllArgsConstructor // 해당 클래스의 모든 멤버 변수(email, password, nickname, profileImage)를 받는 생성자를 생성
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class GetStoreReviewDetailRes {
+
+    private int reviewerID;
+    private String reviewerName;
+    private String reviewerImg;
+    private String created;
+    private int starCount;
+    private String reviewText;
+    private String productName;
+
+}
